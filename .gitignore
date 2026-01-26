@@ -3,7 +3,8 @@
 .claude/
 
 # Backup directories created by install script
-dotfiles_backup_*/
+fts_backup_*/
+dotfiles_backup_*/  # Legacy - can be removed after migration
 
 # macOS system files
 .DS_Store

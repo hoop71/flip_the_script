@@ -13,11 +13,11 @@ source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 # Alias hints (learn shortcuts as you work)
-DOTFILES_DIR="${DOTFILES_DIR:-$HOME/dotfiles}"
-[[ -f "$DOTFILES_DIR/zsh/alias-hints.zsh" ]] && source "$DOTFILES_DIR/zsh/alias-hints.zsh"
+FTS_DIR="${FTS_DIR:-$HOME/flip_the_script}"
+[[ -f "$FTS_DIR/zsh/alias-hints.zsh" ]] && source "$FTS_DIR/zsh/alias-hints.zsh"
 
 # Optional alias library (uncomment what you want)
-# source "$DOTFILES_DIR/zsh/aliases-library.zsh"
+# source "$FTS_DIR/zsh/aliases-library.zsh"
 
 # ============================================
 # Modern CLI Tools

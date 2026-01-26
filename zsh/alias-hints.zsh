@@ -2,7 +2,7 @@
 # Suggests aliases when you type the full command
 
 # Only run if hints are enabled
-HINTS_FILE="$HOME/.dotfiles_hints"
+HINTS_FILE="$HOME/.fts_hints"
 [[ ! -f "$HINTS_FILE" ]] && return
 
 # Show random hint on startup (50% chance)
@@ -16,8 +16,8 @@ if [[ $((RANDOM % 2)) -eq 0 ]]; then
     "Use 'new branch-name' to create and checkout a git branch"
     "Press Ctrl+T to fuzzy find files in current directory"
     "Type '..' to go up one directory, '...' for two"
-    "Run 'dotfiles check' to verify your setup"
-    "Run 'dotfiles aliases' to see all available shortcuts"
+    "Run 'fts check' to verify your setup"
+    "Run 'fts aliases' to see all available shortcuts"
   )
   local random_hint=${HINT_LIST[$RANDOM % ${#HINT_LIST[@]}]}
   echo -e "\033[0;36m💡\033[0m $random_hint"

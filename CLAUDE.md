@@ -2,7 +2,7 @@
 
 ## Overview
 
-macOS dotfiles with Agnoster-style Starship prompt, modern CLI tools (eza, bat, fzf, zoxide), and lazy-loaded NVM for fast shell startup.
+Flip The Script (fts) - macOS terminal setup with Agnoster-style Starship prompt, modern CLI tools (eza, bat, fzf, zoxide), and lazy-loaded NVM for fast shell startup.
 
 **Stack**: ZSH + Starship + Homebrew. No Oh-My-Zsh.
 

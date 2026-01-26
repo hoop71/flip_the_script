@@ -1,14 +1,14 @@
 # Flip The Script `(╯°□°)╯︵ ┻━┻`
 
 <p align="center">
-  <img src="docs/public/filp_the_script_banner.png" alt="Flip The Script - Modern macOS Dotfiles" width="800" />
+  <img src="docs/public/filp_the_script_banner.png" alt="Flip The Script - Modern macOS Terminal Setup" width="800" />
 </p>
 
 <p align="center">
   <strong>Stop waiting on 5-second shell loads. Millisecond startup. Zero bloat. Pure speed.</strong>
 </p>
 
-Personal dotfiles featuring an Agnoster-inspired Starship prompt with powerline arrows, modern CLI tools, and a beautiful terminal setup.
+A modern terminal setup featuring an Agnoster-inspired Starship prompt with powerline arrows, modern CLI tools, and a beautiful terminal experience.
 
 ## Features
 
@@ -37,7 +37,7 @@ Personal dotfiles featuring an Agnoster-inspired Starship prompt with powerline 
 - **Syntax highlighting** - Real-time command validation
 - **Smart alias hints** - Learn shortcuts as you work (optional)
 - **Curated alias library** - Git, Docker, Kubernetes shortcuts
-- **Interactive CLI** - Manage dotfiles with `dotfiles` command
+- **Interactive CLI** - Manage your setup with `fts` command
 
 ## 📦 Installation
 
@@ -50,10 +50,10 @@ Personal dotfiles featuring an Agnoster-inspired Starship prompt with powerline 
 
 ```bash
 # Clone the repo
-git clone https://github.com/hoop71/dotfiles.git ~/dotfiles
+git clone https://github.com/hoop71/flip_the_script.git ~/flip_the_script
 
 # Run the install script
-cd ~/dotfiles
+cd ~/flip_the_script
 ./install.sh
 
 # Restart your shell
@@ -66,12 +66,12 @@ exec zsh
 2. **Installs Nerd Font** for icons and powerline symbols
 3. **Clones ZSH plugins**: autosuggestions, syntax-highlighting
 4. **Creates symlinks** for all config files:
-   - `~/.zshrc` → `~/dotfiles/zsh/zshrc`
-   - `~/.zshenv` → `~/dotfiles/zsh/zshenv`
-   - `~/.config/starship.toml` → `~/dotfiles/starship/starship.toml`
-5. **Backs up** any existing configs to `~/dotfiles_backup_[timestamp]`
+   - `~/.zshrc` → `~/flip_the_script/zsh/zshrc`
+   - `~/.zshenv` → `~/flip_the_script/zsh/zshenv`
+   - `~/.config/starship.toml` → `~/flip_the_script/starship/starship.toml`
+5. **Backs up** any existing configs to `~/fts_backup_[timestamp]`
 6. **Creates** `~/.zshrc.local` for machine-specific configuration
-7. **Adds `bin/` to PATH** for the `dotfiles` CLI tool
+7. **Adds `bin/` to PATH** for the `fts` CLI tool
 
 ## 🎨 Customization
 
@@ -97,7 +97,7 @@ This file is gitignored and won't be tracked.
 ## 📂 Structure
 
 ```
-dotfiles/
+flip_the_script/
 ├── README.md               # You are here
 ├── CHANGELOG.md            # Version history
 ├── CONTRIBUTING.md         # Contribution guidelines
@@ -105,7 +105,7 @@ dotfiles/
 ├── CLAUDE.md               # LLM assistant guide
 ├── install.sh              # Automated setup script
 ├── bin/
-│   └── dotfiles           # Interactive CLI tool
+│   └── fts                # Interactive CLI tool
 ├── starship/
 │   └── starship.toml      # Starship prompt config (Agnoster theme)
 └── zsh/
@@ -117,15 +117,15 @@ dotfiles/
 
 ## 🔧 CLI Tool
 
-The `dotfiles` command provides interactive management:
+The `fts` command provides interactive management:
 
 ```bash
-dotfiles check        # Verify setup and diagnose issues
-dotfiles aliases      # Browse available aliases
-dotfiles hint         # Get a random productivity tip
-dotfiles hints        # Toggle learning hints on/off
-dotfiles update       # Pull latest changes
-dotfiles benchmark    # Test shell startup speed
+fts check        # Verify setup and diagnose issues
+fts aliases      # Browse available aliases
+fts hint         # Get a random productivity tip
+fts hints        # Toggle learning hints on/off
+fts update       # Pull latest changes
+fts benchmark    # Test shell startup speed
 ```
 
 ## 🔧 Included Aliases

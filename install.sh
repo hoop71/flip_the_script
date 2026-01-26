@@ -2,10 +2,10 @@
 
 set -e
 
-DOTFILES_DIR="$(cd "$(dirname "$0")" && pwd)"
-BACKUP_DIR="$HOME/dotfiles_backup_$(date +%Y%m%d_%H%M%S)"
+FTS_DIR="$(cd "$(dirname "$0")" && pwd)"
+BACKUP_DIR="$HOME/fts_backup_$(date +%Y%m%d_%H%M%S)"
 
-echo "==> Installing dotfiles from $DOTFILES_DIR"
+echo "==> Installing Flip The Script from $FTS_DIR"
 
 # Install Homebrew packages
 echo "==> Installing Homebrew packages"
@@ -98,13 +98,13 @@ link_file() {
 
 # Link zsh configs
 echo "==> Linking zsh configs"
-link_file "$DOTFILES_DIR/zsh/zshrc" "$HOME/.zshrc"
-link_file "$DOTFILES_DIR/zsh/zshenv" "$HOME/.zshenv"
+link_file "$FTS_DIR/zsh/zshrc" "$HOME/.zshrc"
+link_file "$FTS_DIR/zsh/zshenv" "$HOME/.zshenv"
 
 # Link starship config
 echo "==> Linking starship config"
 mkdir -p "$HOME/.config"
-link_file "$DOTFILES_DIR/starship/starship.toml" "$HOME/.config/starship.toml"
+link_file "$FTS_DIR/starship/starship.toml" "$HOME/.config/starship.toml"
 
 # Create .zshrc.local if it doesn't exist
 if [[ ! -f "$HOME/.zshrc.local" ]]; then
@@ -122,11 +122,11 @@ else
   echo "==> ~/.zshrc.local already exists, skipping"
 fi
 
-# Setup dotfiles CLI
-echo "==> Setting up dotfiles CLI"
-chmod +x "$DOTFILES_DIR/bin/dotfiles"
-if ! grep -q "$DOTFILES_DIR/bin" "$HOME/.zshrc.local" 2>/dev/null; then
-  echo "export PATH=\"$DOTFILES_DIR/bin:\$PATH\"" >> "$HOME/.zshrc.local"
+# Setup fts CLI
+echo "==> Setting up fts CLI"
+chmod +x "$FTS_DIR/bin/fts"
+if ! grep -q "$FTS_DIR/bin" "$HOME/.zshrc.local" 2>/dev/null; then
+  echo "export PATH=\"$FTS_DIR/bin:\$PATH\"" >> "$HOME/.zshrc.local"
   echo "    Added to PATH"
 fi
 
@@ -136,10 +136,10 @@ echo "    This shows occasional tips about shortcuts as you work (e.g., 'Use gs 
 read -p "    Enable hints? [y/N] " -n 1 -r
 echo
 if [[ $REPLY =~ ^[Yy]$ ]]; then
-  touch "$HOME/.dotfiles_hints"
-  echo "    ✓ Learning hints enabled! Run 'dotfiles hint' anytime"
+  touch "$HOME/.fts_hints"
+  echo "    ✓ Learning hints enabled! Run 'fts hint' anytime"
 else
-  echo "    Hints disabled. Enable later with: dotfiles hints"
+  echo "    Hints disabled. Enable later with: fts hints"
 fi
 
 echo ""
@@ -150,6 +150,6 @@ fi
 echo ""
 echo "    Next steps:"
 echo "    - Set your terminal font to a Nerd Font for icons"
-echo "    - Run 'dotfiles check' to verify everything works"
-echo "    - Run 'dotfiles hint' to see productivity tips"
-echo "    - Run 'dotfiles aliases' to browse available shortcuts"
+echo "    - Run 'fts check' to verify everything works"
+echo "    - Run 'fts hint' to see productivity tips"
+echo "    - Run 'fts aliases' to browse available shortcuts"

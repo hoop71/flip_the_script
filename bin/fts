@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
-# dotfiles CLI - Manage your dotfiles interactively
+# fts CLI - Manage Flip The Script interactively
 
 set -e
 
-DOTFILES_DIR="${DOTFILES_DIR:-$HOME/dotfiles}"
-HINTS_FILE="$HOME/.dotfiles_hints"
+FTS_DIR="${FTS_DIR:-$HOME/flip_the_script}"
+HINTS_FILE="$HOME/.fts_hints"
 
 # Colors
 RED='\033[0;31m'
@@ -23,9 +23,9 @@ error() { echo -e "${RED}✘${NC} $*"; }
 # Show usage
 usage() {
   cat << EOF
-dotfiles - Manage your dotfiles interactively
+fts - Manage Flip The Script interactively
 
-Usage: dotfiles <command>
+Usage: fts <command>
 
 Commands:
   install       Interactive installation with alias selection
@@ -33,15 +33,15 @@ Commands:
   hint          Show a random productivity hint
   hints         Toggle learning hints on/off
   update        Pull latest changes and reload
-  edit          Open dotfiles in editor
+  edit          Open Flip The Script in editor
   check         Verify setup and diagnose issues
   benchmark     Test shell startup performance
 
 Examples:
-  dotfiles install      # First-time setup
-  dotfiles aliases      # Manage your aliases
-  dotfiles hint         # Learn something new
-  dotfiles check        # Troubleshoot issues
+  fts install      # First-time setup
+  fts aliases      # Manage your aliases
+  fts hint         # Learn something new
+  fts check        # Troubleshoot issues
 EOF
 }
 
@@ -99,7 +99,7 @@ manage_aliases() {
 
 # Check setup health
 check_setup() {
-  info "Checking dotfiles setup...\n"
+  info "Checking Flip The Script setup...\n"
 
   local issues=0
 
@@ -155,7 +155,7 @@ check_setup() {
   if [[ $issues -eq 0 ]]; then
     success "All checks passed! Your setup looks good."
   else
-    error "Found $issues issue(s). Run 'dotfiles install' to fix."
+    error "Found $issues issue(s). Run 'fts install' to fix."
   fi
 }
 
@@ -186,7 +186,7 @@ benchmark_shell() {
 # Main command router
 case "${1:-}" in
   install)
-    "$DOTFILES_DIR/install.sh"
+    "$FTS_DIR/install.sh"
     ;;
   aliases)
     manage_aliases
@@ -198,13 +198,13 @@ case "${1:-}" in
     toggle_hints
     ;;
   update)
-    info "Updating dotfiles..."
-    cd "$DOTFILES_DIR"
+    info "Updating Flip The Script..."
+    cd "$FTS_DIR"
     git pull
     success "Updated! Reload shell with: exec zsh"
     ;;
   edit)
-    ${EDITOR:-code} "$DOTFILES_DIR"
+    ${EDITOR:-code} "$FTS_DIR"
     ;;
   check)
     check_setup

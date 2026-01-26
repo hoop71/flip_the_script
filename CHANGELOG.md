@@ -24,4 +24,4 @@ Initial public release.
 - Symlinked configs for easy version control
 - Git, pnpm, navigation aliases
 
-[1.0.0]: https://github.com/hoop71/dotfiles/releases/tag/v1.0.0
+[1.0.0]: https://github.com/hoop71/flip_the_script/releases/tag/v1.0.0
