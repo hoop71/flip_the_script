@@ -6,7 +6,7 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width" />
 		<meta name="generator" content={Astro.generator} />
-		<meta name="description" content="Flip The Script - Modern macOS terminal setup with Starship prompt, lazy-loaded NVM, and zero Oh-My-Zsh overhead" />
+		<meta name="description" content="Flip The Script - Modern macOS terminal setup with Starship prompt, blazing-fast FNM/NVM support, and zero Oh-My-Zsh overhead" />
 		<title>Flip The Script - Modern macOS Terminal Setup</title>
 
 		<!-- Favicons -->
@@ -53,7 +53,7 @@
 					<div class="feature">
 						<div class="feature-icon">⚡</div>
 						<h3>Lightning Fast</h3>
-						<p>Starship prompt loads in ~10ms. NVM lazy-loads only when needed. No Oh-My-Zsh overhead.</p>
+						<p>Starship prompt loads in ~10ms. FNM auto-switches Node versions instantly (< 50ms). No Oh-My-Zsh overhead.</p>
 					</div>
 
 					<div class="feature">
@@ -156,6 +156,48 @@
 						</dev>
 					</div>
 				</div>
+			</section>
+
+			<section class="node-versions">
+				<h2>Node Version Management</h2>
+				<p class="section-intro">
+					Flip The Script automatically detects and configures your Node version manager for optimal performance.
+				</p>
+				<div class="version-managers">
+					<div class="vm-card recommended">
+						<div class="vm-badge">Recommended</div>
+						<h3>⚡ FNM</h3>
+						<p class="vm-tagline">Fast Node Manager - 10-50x faster than NVM</p>
+						<ul class="vm-features">
+							<li>✅ Instant directory switching (< 50ms)</li>
+							<li>✅ No shell startup delay</li>
+							<li>✅ Built-in .nvmrc support</li>
+							<li>✅ Written in Rust for maximum speed</li>
+						</ul>
+						<div class="code-block">
+							<code>brew install fnm</code>
+							<button class="copy-code-btn" onclick="copyCode(this, 'brew install fnm')">Copy</button>
+						</div>
+					</div>
+
+					<div class="vm-card">
+						<h3>🔄 NVM</h3>
+						<p class="vm-tagline">Node Version Manager - Fully supported</p>
+						<ul class="vm-features">
+							<li>✅ Auto-detected and optimized</li>
+							<li>✅ Lazy-loaded for faster startup</li>
+							<li>✅ Async auto-switching (non-blocking)</li>
+							<li>✅ Works with existing .nvmrc files</li>
+						</ul>
+						<a href="https://github.com/hoop71/flip_the_script/blob/main/docs/FNM_MIGRATION.md" target="_blank" class="vm-link">
+							Migration Guide →
+						</a>
+					</div>
+				</div>
+				<p class="vm-note">
+					<strong>Experiencing 1+ minute hangs when changing directories?</strong>
+					Switch to FNM for instant performance. See our <a href="https://github.com/hoop71/flip_the_script/blob/main/docs/FNM_MIGRATION.md" target="_blank">migration guide</a>.
+				</p>
 			</section>
 
 			<footer>
@@ -558,6 +600,125 @@
 				color: var(--color-text-muted);
 			}
 
+			/* Node Version Management */
+			.node-versions {
+				padding: 3rem 0;
+				border-top: 1px solid var(--color-border);
+			}
+
+			.node-versions h2 {
+				font-size: 2rem;
+				text-align: center;
+				margin-bottom: 1rem;
+			}
+
+			.section-intro {
+				text-align: center;
+				color: var(--color-text-muted);
+				margin-bottom: 2rem;
+				max-width: 700px;
+				margin-left: auto;
+				margin-right: auto;
+			}
+
+			.version-managers {
+				display: grid;
+				grid-template-columns: repeat(auto-fit, minmax(min(100%, 350px), 1fr));
+				gap: 1.5rem;
+				margin-bottom: 2rem;
+			}
+
+			.vm-card {
+				background: var(--color-bg-secondary);
+				border: 2px solid var(--color-border);
+				border-radius: 10px;
+				padding: 2rem;
+				position: relative;
+			}
+
+			.vm-card.recommended {
+				border-color: var(--color-emerald);
+				box-shadow: 0 0 30px rgba(80, 200, 120, 0.15);
+			}
+
+			.vm-badge {
+				position: absolute;
+				top: -12px;
+				right: 20px;
+				background: var(--color-emerald);
+				color: black;
+				padding: 0.25rem 0.75rem;
+				border-radius: 12px;
+				font-size: 0.75rem;
+				font-weight: 700;
+				text-transform: uppercase;
+			}
+
+			.vm-card h3 {
+				font-size: 1.5rem;
+				margin-bottom: 0.5rem;
+			}
+
+			.vm-tagline {
+				color: var(--color-text-muted);
+				margin-bottom: 1rem;
+				font-size: 0.95rem;
+			}
+
+			.vm-features {
+				list-style: none;
+				margin: 1.5rem 0;
+				padding: 0;
+			}
+
+			.vm-features li {
+				padding: 0.5rem 0;
+				color: var(--color-text);
+				font-size: 0.95rem;
+			}
+
+			.vm-card .code-block {
+				margin-top: 1.5rem;
+			}
+
+			.vm-link {
+				display: inline-block;
+				margin-top: 1rem;
+				color: var(--color-blue);
+				text-decoration: none;
+				font-weight: 600;
+				transition: color 0.2s;
+			}
+
+			.vm-link:hover {
+				color: var(--color-pink);
+			}
+
+			.vm-note {
+				text-align: center;
+				color: var(--color-text-muted);
+				background: var(--color-bg-secondary);
+				border: 1px solid var(--color-border);
+				border-radius: 8px;
+				padding: 1.5rem;
+				max-width: 800px;
+				margin: 0 auto;
+			}
+
+			.vm-note strong {
+				color: var(--color-text);
+			}
+
+			.vm-note a {
+				color: var(--color-blue);
+				text-decoration: none;
+				transition: color 0.2s;
+			}
+
+			.vm-note a:hover {
+				color: var(--color-pink);
+			}
+
 			/* Footer */
 			footer {
 				text-align: center;
@@ -747,6 +908,46 @@
 
 				.step-content p {
 					font-size: 0.9375rem;
+				}
+
+				.node-versions {
+					padding: 2rem 0;
+				}
+
+				.node-versions h2 {
+					font-size: 1.5rem;
+					margin-bottom: 0.75rem;
+				}
+
+				.section-intro {
+					font-size: 0.9375rem;
+					padding: 0 0.5rem;
+				}
+
+				.version-managers {
+					grid-template-columns: 1fr;
+					gap: 1rem;
+				}
+
+				.vm-card {
+					padding: 1.5rem;
+				}
+
+				.vm-card h3 {
+					font-size: 1.25rem;
+				}
+
+				.vm-tagline {
+					font-size: 0.875rem;
+				}
+
+				.vm-features li {
+					font-size: 0.875rem;
+				}
+
+				.vm-note {
+					font-size: 0.875rem;
+					padding: 1.25rem;
 				}
 
 				footer {

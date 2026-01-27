@@ -58,6 +58,40 @@ if [[ "$NERD_FONT_INSTALLED" == "false" ]]; then
   fi
 fi
 
+# Install Node version manager (FNM recommended)
+echo "==> Checking Node version manager"
+HAS_NVM=false
+HAS_FNM=false
+
+if [[ -d "$HOME/.nvm" ]]; then
+  HAS_NVM=true
+  echo "    ✓ NVM detected at ~/.nvm"
+fi
+
+if command -v fnm &> /dev/null; then
+  HAS_FNM=true
+  echo "    ✓ FNM detected ($(fnm --version))"
+fi
+
+if [[ "$HAS_NVM" == "false" && "$HAS_FNM" == "false" ]]; then
+  echo "    ⚠ No Node version manager detected"
+  echo "    FNM (Fast Node Manager) is recommended - 10-50x faster than NVM"
+  read -p "    Install FNM via Homebrew? [Y/n] " -n 1 -r
+  echo
+  if [[ $REPLY =~ ^[Nn]$ ]]; then
+    echo "    Skipped. You can install later:"
+    echo "      brew install fnm"
+    echo "      # or for NVM: https://github.com/nvm-sh/nvm#installing-and-updating"
+  else
+    echo "    Installing fnm..."
+    brew install fnm
+    HAS_FNM=true
+  fi
+elif [[ "$HAS_NVM" == "true" && "$HAS_FNM" == "false" ]]; then
+  echo "    💡 Consider switching to FNM for faster performance"
+  echo "       See docs/FNM_MIGRATION.md for migration guide"
+fi
+
 # Install zsh plugins
 echo "==> Installing zsh plugins"
 ZSH_PLUGINS_DIR="$HOME/.zsh"

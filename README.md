@@ -63,15 +63,16 @@ exec zsh
 ### What the install script does:
 
 1. **Installs Homebrew packages**: starship, fzf, zoxide, eza, bat
-2. **Installs Nerd Font** for icons and powerline symbols
-3. **Clones ZSH plugins**: autosuggestions, syntax-highlighting
-4. **Creates symlinks** for all config files:
+2. **Detects Node version manager**: Offers to install FNM if neither FNM nor NVM is detected
+3. **Installs Nerd Font** for icons and powerline symbols
+4. **Clones ZSH plugins**: autosuggestions, syntax-highlighting
+5. **Creates symlinks** for all config files:
    - `~/.zshrc` → `~/flip_the_script/zsh/zshrc`
    - `~/.zshenv` → `~/flip_the_script/zsh/zshenv`
    - `~/.config/starship.toml` → `~/flip_the_script/starship/starship.toml`
-5. **Backs up** any existing configs to `~/fts_backup_[timestamp]`
-6. **Creates** `~/.zshrc.local` for machine-specific configuration
-7. **Adds `bin/` to PATH** for the `fts` CLI tool
+6. **Backs up** any existing configs to `~/fts_backup_[timestamp]`
+7. **Creates** `~/.zshrc.local` for machine-specific configuration
+8. **Adds `bin/` to PATH** for the `fts` CLI tool
 
 ## 🎨 Customization
 
@@ -156,6 +157,32 @@ fts benchmark    # Test shell startup speed
 - `pt` - pnpm test
 
 **More aliases available**: See `zsh/aliases-library.zsh` for Docker, Kubernetes, and utility aliases you can enable.
+
+## ⚡ Node Version Management
+
+Flip The Script automatically detects and configures your Node version manager:
+
+### FNM (Recommended)
+**Fast Node Manager** - 10-50x faster than NVM with instant directory switching:
+
+```bash
+brew install fnm
+exec zsh
+```
+
+- ✅ Instant auto-switching on directory change (< 50ms)
+- ✅ No shell startup delay
+- ✅ Built-in support for `.nvmrc` files
+
+### NVM (Supported)
+If you're using NVM, it's automatically detected with optimizations:
+
+- Lazy-loaded to avoid startup performance hit
+- Async auto-switching (non-blocking, won't hang your prompt)
+- Works with all existing `.nvmrc` files
+
+### Migrating from NVM to FNM
+Experiencing 1+ minute hangs when changing directories? See [`docs/FNM_MIGRATION.md`](docs/FNM_MIGRATION.md) for a step-by-step migration guide.
 
 ## 🎯 Font Recommendations
 

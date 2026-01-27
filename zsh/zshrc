@@ -61,78 +61,110 @@ alias cat='bat'
 # Environment & PATH
 # ============================================
 
-# NVM - Lazy loaded for faster shell startup
-export NVM_DIR="$HOME/.nvm"
+# Node Version Manager - Auto-detect FNM or NVM
+# FNM is 10-50x faster and recommended for new installs
+if command -v fnm &> /dev/null; then
+  # === FNM (Fast Node Manager) ===
+  # Native auto-switching on directory change - no hooks needed
+  eval "$(fnm env --use-on-cd)"
 
-# Flag to track if nvm is loaded
-_NVM_LOADED=0
+elif [[ -d "$HOME/.nvm" ]]; then
+  # === NVM (Node Version Manager) ===
+  # Lazy-loaded to avoid startup performance hit
+  export NVM_DIR="$HOME/.nvm"
 
-# Load nvm function (idempotent - safe to call multiple times)
-load_nvm() {
-  if [ "$_NVM_LOADED" = "0" ]; then
-    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-    [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
-    _NVM_LOADED=1
-  fi
-}
+  # Flag to track if nvm is loaded
+  _NVM_LOADED=0
 
-# Lazy-loading wrapper functions
-nvm() {
-  load_nvm
-  command nvm "$@"
-}
-node() {
-  load_nvm
-  command node "$@"
-}
-npm() {
-  load_nvm
-  command npm "$@"
-}
-npx() {
-  load_nvm
-  command npx "$@"
-}
+  # Load nvm function (idempotent - safe to call multiple times)
+  load_nvm() {
+    if [ "$_NVM_LOADED" = "0" ]; then
+      [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+      [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+      _NVM_LOADED=1
+    fi
+  }
 
-# Auto-switch Node version based on .nvmrc
-autoload -U add-zsh-hook
-load-nvmrc() {
-  local nvmrc_path
-  nvmrc_path="$(nvm_find_nvmrc 2>/dev/null)"
-
-  if [ -n "$nvmrc_path" ]; then
-    # Load nvm if not already loaded
+  # Lazy-loading wrapper functions
+  nvm() {
     load_nvm
+    command nvm "$@"
+  }
+  node() {
+    load_nvm
+    command node "$@"
+  }
+  npm() {
+    load_nvm
+    command npm "$@"
+  }
+  npx() {
+    load_nvm
+    command npx "$@"
+  }
 
-    local nvmrc_node_version
-    nvmrc_node_version=$(nvm version "$(cat "${nvmrc_path}")")
+  # Auto-switch Node version based on .nvmrc
+  autoload -U add-zsh-hook
 
-    if [ "$nvmrc_node_version" = "N/A" ]; then
-      echo "Installing Node version from .nvmrc..."
-      nvm install
-    elif [ "$nvmrc_node_version" != "$(nvm version)" ]; then
-      nvm use --silent
+  # Helper function to find .nvmrc
+  nvm_find_nvmrc() {
+    local dir="$PWD"
+    while [ "$dir" != "/" ]; do
+      if [ -f "$dir/.nvmrc" ]; then
+        echo "$dir/.nvmrc"
+        return
+      fi
+      dir=$(dirname "$dir")
+    done
+  }
+
+  # Async auto-switch on directory change (non-blocking)
+  load-nvmrc-async() {
+    local nvmrc_path
+    nvmrc_path="$(nvm_find_nvmrc 2>/dev/null)"
+
+    if [ -n "$nvmrc_path" ]; then
+      # Run in background to avoid blocking prompt
+      (
+        load_nvm
+        local nvmrc_node_version
+        nvmrc_node_version=$(nvm version "$(cat "${nvmrc_path}")")
+
+        if [ "$nvmrc_node_version" = "N/A" ]; then
+          echo "🔧 Installing Node version from .nvmrc..."
+          nvm install
+        elif [ "$nvmrc_node_version" != "$(nvm version)" ]; then
+          nvm use --silent
+        fi
+      ) &!  # Run in background without job control messages
     fi
-  fi
-}
+  }
 
-# Helper function to find .nvmrc (works with lazy-loaded nvm)
-nvm_find_nvmrc() {
-  local dir="$PWD"
-  while [ "$dir" != "/" ]; do
-    if [ -f "$dir/.nvmrc" ]; then
-      echo "$dir/.nvmrc"
-      return
+  # Sync version for shell startup
+  load-nvmrc() {
+    local nvmrc_path
+    nvmrc_path="$(nvm_find_nvmrc 2>/dev/null)"
+
+    if [ -n "$nvmrc_path" ]; then
+      load_nvm
+      local nvmrc_node_version
+      nvmrc_node_version=$(nvm version "$(cat "${nvmrc_path}")")
+
+      if [ "$nvmrc_node_version" = "N/A" ]; then
+        echo "🔧 Installing Node version from .nvmrc..."
+        nvm install
+      elif [ "$nvmrc_node_version" != "$(nvm version)" ]; then
+        nvm use --silent
+      fi
     fi
-    dir=$(dirname "$dir")
-  done
-}
+  }
 
-# Run on directory change
-add-zsh-hook chpwd load-nvmrc
+  # Run async on directory change (non-blocking)
+  add-zsh-hook chpwd load-nvmrc-async
 
-# Run on shell startup
-load-nvmrc
+  # Run sync on shell startup
+  load-nvmrc
+fi
 
 # Libpq
 export PATH="/opt/homebrew/opt/libpq/bin:$PATH"
