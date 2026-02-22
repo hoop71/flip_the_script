@@ -70,6 +70,7 @@ exec zsh
    - `~/.zshrc` → `~/flip_the_script/zsh/zshrc`
    - `~/.zshenv` → `~/flip_the_script/zsh/zshenv`
    - `~/.config/starship.toml` → `~/flip_the_script/starship/starship.toml`
+   - `~/.claude/settings.json` → `~/flip_the_script/claude/settings.json`
 6. **Backs up** any existing configs to `~/fts_backup_[timestamp]`
 7. **Creates** `~/.zshrc.local` for machine-specific configuration
 8. **Adds `bin/` to PATH** for the `fts` CLI tool
@@ -107,8 +108,11 @@ flip_the_script/
 ├── install.sh              # Automated setup script
 ├── bin/
 │   └── fts                # Interactive CLI tool
+├── claude/
+│   ├── settings.json       # Claude Code global permissions (symlinked to ~/.claude/)
+│   └── claude-code-safety.md  # Team safety guide for Claude Code
 ├── starship/
-│   └── starship.toml      # Starship prompt config (Agnoster theme)
+│   └── starship.toml       # Starship prompt config (Agnoster theme)
 └── zsh/
     ├── zshrc              # Main ZSH config
     ├── zshenv             # Environment variables

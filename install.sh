@@ -140,6 +140,18 @@ echo "==> Linking starship config"
 mkdir -p "$HOME/.config"
 link_file "$FTS_DIR/starship/starship.toml" "$HOME/.config/starship.toml"
 
+# Link Claude Code config
+echo "==> Linking Claude Code config"
+mkdir -p "$HOME/.claude"
+if [[ -f "$HOME/.claude/settings.json" && ! -L "$HOME/.claude/settings.json" ]]; then
+  # Existing non-symlink settings — merge rather than overwrite
+  echo "    ⚠ Existing ~/.claude/settings.json found (not a symlink)"
+  echo "    Backing up to $BACKUP_DIR and linking dotfiles version"
+  mkdir -p "$BACKUP_DIR"
+  cp "$HOME/.claude/settings.json" "$BACKUP_DIR/claude-settings.json"
+fi
+link_file "$FTS_DIR/claude/settings.json" "$HOME/.claude/settings.json"
+
 # Create .zshrc.local if it doesn't exist
 if [[ ! -f "$HOME/.zshrc.local" ]]; then
   echo "==> Creating ~/.zshrc.local for machine-specific config"
